@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday 🎉</title>
+  <meta name="description" content="A playful, animated birthday website – single HTML file." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#0f1021; /* deep indigo */
+      --bg2:#1b1c3a; /* dark purple */
+      --accent:#ff71cc; /* pink */
+      --accent2:#6cfaff; /* cyan */
+      --gold:#ffd166;
+      --white:#f7f7ff;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0}
+    body{
+      font-family:Poppins,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:var(--white);
+      background: radial-gradient(1200px 800px at 80% -10%, rgba(255,113,204,.25), transparent 60%),
+                  radial-gradient(1000px 600px at -10% 90%, rgba(108,250,255,.2), transparent 60%),
+                  linear-gradient(180deg,var(--bg1),var(--bg2));
+      overflow-x:hidden;
+    }
+    a{color:inherit}
+
+    /* Header/Hero */
+    .hero{
+      position:relative;
+      min-height:100svh;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      padding:3rem 1rem 7rem;
+      text-align:center;
+    }
+    .shine{
+      position:absolute;inset:-20vh -20vw auto -20vw;height:60vh;filter:blur(40px);
+      background: conic-gradient(from 120deg at 50% 50%, rgba(255,113,204,.18), rgba(108,250,255,.18), transparent 60%);
+      pointer-events:none;
+      animation:spin 24s linear infinite;
+      opacity:.7
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .title{
+      font-family:Pacifico,cursive;
+      font-size: clamp(2.5rem, 6vw + 1rem, 6rem);
+      line-height:1.05;
+      margin:0 0 .3rem;
+      letter-spacing:.5px;
+      color:transparent;
+      -webkit-text-stroke: 2px var(--white);
+      background: linear-gradient(90deg,var(--accent),var(--accent2));
+      -webkit-background-clip:text;background-clip:text;
+      filter:drop-shadow(0 4px 24px rgba(255,113,204,.35)) drop-shadow(0 8px 40px rgba(108,250,255,.25));
+    }
+    .subtitle{
+      font-weight:400;opacity:.9;margin:0 0 1.25rem;font-size:clamp(.95rem,2.2vw,1.25rem)
+    }
+
+    .cta{
+      display:inline-flex;align-items:center;gap:.7rem;border:1px solid rgba(255,255,255,.2);
+      padding:.85rem 1.1rem;border-radius:999px;backdrop-filter:blur(8px);
+      background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
+      cursor:pointer;user-select:none;text-decoration:none;font-weight:600;
+      transition:transform .15s ease, box-shadow .15s ease, background .3s ease;
+      box-shadow:0 8px 30px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.15);
+    }
+    .cta:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(0,0,0,.35)}
+
+    .chip{display:inline-flex;gap:.5rem;align-items:center;padding:.35rem .7rem;border-radius:999px;border:1px dashed rgba(255,255,255,.25);opacity:.9}
+
+    .floating-emo{
+      position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0
+    }
+    .bubble{position:absolute;font-size:clamp(18px,3.2vw,36px);opacity:.85;animation:rise var(--dur) linear infinite;filter:drop-shadow(0 2px 6px rgba(0,0,0,.5))}
+    @keyframes rise{to{transform:translateY(-110vh) rotate(360deg);opacity:.95}}
+
+    /* Sections */
+    section{padding:64px 16px;max-width:1200px;margin:0 auto}
+    .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+    .card{
+      background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.15);border-radius:18px;padding:18px;position:relative;overflow:hidden
+    }
+    .card h3{margin:.2rem 0 0;font-size:1.1rem}
+    .badge{position:absolute;top:10px;right:10px;border-radius:999px;border:1px solid rgba(255,255,255,.2);padding:.25rem .6rem;font-size:.75rem;opacity:.8}
+    .img-wrap{aspect-ratio:4/3;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.12);background:#090a1a;margin-bottom:.6rem}
+    .img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+
+    /* Music control */
+    .music{
+      display:flex;align-items:center;gap:.8rem;flex-wrap:wrap
+    }
+    .btn{
+      appearance:none;border:none;border-radius:12px;padding:.7rem 1rem;font-weight:700;cursor:pointer;
+      background:linear-gradient(180deg,var(--accent),#d94ea8);color:#10101a;box-shadow:0 6px 18px rgba(255,113,204,.35)
+    }
+    .btn:active{transform:translateY(1px)}
+
+    /* Footer */
+    footer{opacity:.8;text-align:center;padding:40px 16px}
+
+    /* Fireworks canvas behind footer */
+    #fx{position:fixed;inset:0;z-index:-1;pointer-events:none}
+
+    /* Small utility */
+    .sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  </style>
+</head>
+<body>
+  <canvas id="confetti" class="floating-emo" aria-hidden="true"></canvas>
+  <div class="hero">
+    <div class="shine" aria-hidden="true"></div>
+    <div style="position:relative;z-index:2;max-width:960px">
+      <div class="chip" aria-hidden="true">🎂 <span>Special Day</span></div>
+      <h1 class="title">Happy Birthday, Dear Friend!</h1>
+      <p class="subtitle">Wishing you joy, love, and a year full of adventures. This little site is your pocket party ✨</p>
+      <a class="cta" href="#surprises">Open Surprises <span aria-hidden>🎁</span></a>
+    </div>
+  </div>
+
+  <section id="surprises" aria-label="Surprises">
+    <h2 style="margin:0 0 14px;font-weight:800;font-size:clamp(1.4rem,3.2vw,2rem)">Your Mini Celebration</h2>
+    <p style="margin:0 0 18px;opacity:.9">A gallery, wishes, music, and fireworks. Replace images and audio with your own for a perfect match.</p>
+    <div class="card-grid">
+      <article class="card">
+        <div class="badge">📸 Gallery</div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1521337586-5bb5328b5592?auto=format&fit=crop&w=1200&q=60" alt="Birthday cupcake with candle"></div>
+        <h3>Sweet Moments</h3>
+        <p style="opacity:.9">A memory wall. Swap the links below with your photos.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+          <a class="cta" href="#gallery">View Gallery</a>
+        </div>
+      </article>
+      
+      <article class="card">
+        <div class="badge">💌 Wishes</div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=60" alt="Confetti">
+        </div>
+        <h3>Dear You…</h3>
+        <p id="wish" style="opacity:.95;min-height:3lh"></p>
+        <button class="btn" id="replayWish">Replay Message</button>
+      </article>
+
+      <article class="card">
+        <div class="badge">🎵 Music</div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=1200&q=60" alt="Headphones on neon background"></div>
+        <h3>Set the Mood</h3>
+        <p style="opacity:.9">Play birthday vibes while you browse.</p>
+        <div class="music">
+          <button class="btn" id="toggleMusic">Play Music</button>
+          <span id="musicState" aria-live="polite">paused</span>
+          <audio id="audio" preload="auto">
+            <!-- Replace with your own track if you like -->
+            <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_3d7f08c6d6.mp3?filename=happiness-112163.mp3" type="audio/mpeg" />
+          </audio>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="badge">🎆 FX</div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1511556532299-6f6cfc5a3a48?auto=format&fit=crop&w=1200&q=60" alt="Fireworks"></div>
+        <h3>Fireworks</h3>
+        <p style="opacity:.9">Click for a burst of color!</p>
+        <button class="btn" id="boom">Launch Fireworks</button>
+      </article>
+    </div>
+  </section>
+
+  <section id="gallery" aria-label="Gallery">
+    <h2 style="margin:0 0 14px;font-weight:800;font-size:clamp(1.4rem,3.2vw,2rem)">Memory Lane</h2>
+    <div class="card-grid">
+      <!-- Replace the image URLs below with your own photos -->
+      <div class="card"><div class="img-wrap"><img alt="Memory 1" src="https://images.unsplash.com/photo-1524255684952-d7185b509571?auto=format&fit=crop&w=1200&q=60"></div><h3>Throwback</h3></div>
+      <div class="card"><div class="img-wrap"><img alt="Memory 2" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=60"></div><h3>Celebration</h3></div>
+      <div class="card"><div class="img-wrap"><img alt="Memory 3" src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=60"></div><h3>Friends</h3></div>
+      <div class="card"><div class="img-wrap"><img alt="Memory 4" src="https://images.unsplash.com/photo-1528716321680-815a8cdb8cbe?auto=format&fit=crop&w=1200&q=60"></div><h3>Good Times</h3></div>
+    </div>
+  </section>
+
+  <footer>
+    Made with 💖 for your day. Replace text, images, and audio to match the video exactly.
+  </footer>
+
+  <canvas id="fx" width="1920" height="1080" aria-hidden="true"></canvas>
+
+  <script>
+    // ===== Floating emojis (balloons, hearts, stars) =====
+    const EMOJIS = ["🎈","🎉","💖","⭐","🎊","🎂","🧁"]; 
+    const FLOAT = document.getElementById('confetti');
+    const fctx = FLOAT.getContext('2d');
+
+    function resizeFloat(){ FLOAT.width = innerWidth; FLOAT.height = innerHeight; }
+    addEventListener('resize', resizeFloat); resizeFloat();
+
+    const sprites = Array.from({length: 40}).map(()=>({
+      x: Math.random()*FLOAT.width,
+      y: FLOAT.height + Math.random()*FLOAT.height,
+      size: 18 + Math.random()*28,
+      speed: 0.6 + Math.random()*1.2,
+      rot: Math.random()*Math.PI*2,
+      emoji: EMOJIS[Math.floor(Math.random()*EMOJIS.length)]
+    }));
+
+    function drawFloat(){
+      fctx.clearRect(0,0,FLOAT.width,FLOAT.height);
+      sprites.forEach(s=>{
+        s.y -= s.speed; s.rot += 0.01; if(s.y < -60) { s.y = FLOAT.height + Math.random()*80; s.x = Math.random()*FLOAT.width; }
+        fctx.save();
+        fctx.translate(s.x, s.y); fctx.rotate(s.rot);
+        fctx.font = `${s.size}px serif`; fctx.fillText(s.emoji, 0, 0);
+        fctx.restore();
+      });
+      requestAnimationFrame(drawFloat);
+    }
+    drawFloat();
+
+    // ===== Typewriter wish =====
+    const wishText = "May your day sparkle with laughter, cake, and unforgettable moments. Keep shining!";
+    const wishEl = document.getElementById('wish');
+    const replayBtn = document.getElementById('replayWish');
+
+    function typeIt(text, el, speed=22){
+      el.textContent = "";
+      let i = 0;
+      const id = setInterval(()=>{
+        el.textContent += text[i++];
+        if(i>=text.length) clearInterval(id);
+      }, speed);
+    }
+    typeIt(wishText, wishEl);
+    replayBtn.addEventListener('click', ()=> typeIt(wishText, wishEl, 16));
+
+    // ===== Music control =====
+    const audio = document.getElementById('audio');
+    const toggle = document.getElementById('toggleMusic');
+    const state = document.getElementById('musicState');
+
+    function setState(){ state.textContent = audio.paused ? 'paused' : 'playing'; }
+    toggle.addEventListener('click', async ()=>{
+      if(audio.paused){
+        try { await audio.play(); } catch(err){ console.warn(err); }
+      } else { audio.pause(); }
+      setState();
+    });
+    audio.addEventListener('ended', setState);
+    setState();
+
+    // ===== Fireworks =====
+    const FX = document.getElementById('fx');
+    const ctx = FX.getContext('2d');
+
+    function resizeFX(){ FX.width = innerWidth; FX.height = innerHeight; }
+    addEventListener('resize', resizeFX); resizeFX();
+
+    let particles = [];
+    function burst(x, y, color){
+      for(let i=0;i<140;i++){
+        const angle = Math.random()*Math.PI*2;
+        const speed = Math.random()*4+1.5;
+        particles.push({
+          x,y, vx: Math.cos(angle)*speed, vy: Math.sin(angle)*speed,
+          life: 60 + Math.random()*30, color
+        });
+      }
+    }
+
+    function render(){
+      ctx.clearRect(0,0,FX.width,FX.height);
+      particles.forEach(p=>{
+        p.x += p.vx; p.y += p.vy; p.vy += 0.02; p.life -= 1;
+        ctx.globalAlpha = Math.max(p.life/90, 0);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(p.x, p.y, 2, 2);
+      });
+      particles = particles.filter(p=>p.life>0);
+      requestAnimationFrame(render);
+    }
+    render();
+
+    function rndColor(){
+      const colors = ['#ff71cc','#6cfaff','#ffd166','#baffc9','#caffbf','#9bf6ff','#f1c0e8'];
+      return colors[Math.floor(Math.random()*colors.length)];
+    }
+
+    document.getElementById('boom').addEventListener('click', ()=>{
+      const x = innerWidth/2 + (Math.random()*200-100);
+      const y = innerHeight*0.45 + (Math.random()*120-60);
+      burst(x,y,rndColor());
+      setTimeout(()=>burst(x+40,y+10,rndColor()),130);
+      setTimeout(()=>burst(x-30,y-30,rndColor()),240);
+    });
+
+    // Accessibility: reduce motion prefers
+    const media = matchMedia('(prefers-reduced-motion: reduce)');
+    if(media.matches){
+      // tone down animations
+      sprites.splice(0, sprites.length/2);
+    }
+  </script>
+</body>
+</html>
